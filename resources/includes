@@ -1,0 +1,12 @@
+# This file will have all the external contents linked to the project.
+
+# Font
+# MAD Hacker font https://blogfonts.com/mad-hacker.font by Darrel Flood utilized for this project.
+# Free license for non-commercial use
+# Italic version included for the in-game web texts.
+
+# head info
+<link href="https://blogfonts.com/css/aWQ9MTU3NTg3JnN1Yj01ODcmYz1tJnR0Zj1NYWQrSGFja2VyK0l0YWxpYy50dGYmbj1tYWQtaGFja2VyLTI/MAD hacker.ttf" rel="stylesheet" type="text/css"/>
+
+#css info
+font-family: 'mad-hacker-2', sans-serif;

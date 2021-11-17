@@ -1,0 +1,38 @@
+Objetivo del juego:
+    Matar a todos los enemigos que se pueda, en el tiempo establecido por el nivel, sin perder los puntos de resistencia.
+
+Resistencia y daño:
+    Se inicia el juego con 5 puntos de resistencia: (veremos si al final es muy fácil o no)
+    Los puntos de resistencia se pierden si:
+        Un enemigo causa daño al objetivo
+        Tú causas daño al objetivo.
+        Tú causas daño colateral (aparición aleatoria de personajes no-enemigos)
+    Los puntos de resistencia se recuperan si:
+        Recuperas 1 punto de resistencia al superar 1 nivel.
+        Recuperas 1 punto de resistencia si disparas a una bolsa de comida (Aparece aleatoriamente por el mapa)
+    Daño:
+        Un enemigo causa daño al objetivo si no ha sido eliminado por tí en un tiempo determinado (10-15s desde que aparece)
+        Una vez que el enemigo ha causado daño, desaparece del mapa (sólo causa daño 1 vez y se va)
+        Tú causas daño al objetivo si le disparas por error.
+        Tú causas daño a un colateral si le disparas por error al personaje no-enemigo (aparecen aleatoriamente por el mapa y desaparecen pasado un tiempo)
+
+Tiempo y aumento de dificultad:
+    El tiempo inicial es de 1 mimuto por nivel.
+    En cada nivel, aumentará el el número de enemigos que aparecerán. (% de aparición a determinar)
+    En cada nivel, el tiempo que tienes que mantenerte vivo aumentará en 10s.
+    En cada nivel, estarás más cansado, así que la mira comenzará a vibrar/temblar cada vez más.
+        Si comes (Disparas a una bolsa de comida que aparezca en el mapa), la mira deja de temblar durante el resto del nivel, además de recuperar el punto de vida.
+
+Puntuación / ranking (Para hacerlo modo arcade):
+    Los enemigos otorgarán una puntuación inicial de 50pt por muerte.
+    Los puntos obtenidos aumentarán a medida que aciertes disparos, si fallas un disparo, la racha se resetea.
+    El multiplicador de racha comienza a partir del tercer disparo acertado y aumenta la puntuación obtenida x2, x3, x4 hasta un máximo de x10.
+    Un disparo colateral o al objetivo, resta 500pt (o deja el contador a 0 si no tienes suficientes puntos) 
+Munición, daño específico:
+    Habrá 3 tipos de munición, cada tipo de munición tendrá un color.
+    Los enemigos tendrán un determinado color, si son impactados por el color adecuado, reciben daño al 100% y si son impactados por un color equivocado, reciben 1/3 del daño (3 balas de color equivocado matan al enemigo, 1 bala del color adecuado mata al enemigo)
+    Cualquiera de las municiones causa un 100% de daño amigo (resta 1 punto de resistencia) 
+Niveles, fin del juego y ranking:
+    Tanto si ganas la partida como si la pierdes, tendrás una pantalla final en la que introducir tus siglas (6 siglas), que se guardarán junto a tu puntuación obtenida. Como no tenemos base de datos, debemos guardar estas puntuaciones en un archivo de texto, de manera que el juego tenga esas puntuaciones guardadas para la próxima vez que lo iniciemos.
+    El juego tendrá un máximo de 10 niveles inicialmente (a ver cuánto nos da tiempo a desarrollar).
+    El final del juego es cuando se superan todos los niveles. 
