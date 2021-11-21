@@ -1,35 +1,51 @@
 * {
     font-family: 'MAD Hacker', sans-serif; 
+    box-sizing: border-box;
 }
 
+html,
 body {
-    background-image: url('../media/images/background.jpg');
-    background-size: cover;
+    background-image: url('../media/images/body-background.jpg');
     background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
 }
 
 .game-wrapper {
-    margin: 7em auto;
+    position:absolute;
+    left: 33%;
+    height: 100vh;
+    width: 35%;
+    min-width: 500px;
+    margin: auto;
+    padding: 10px;
+    background-image: url('../media/images/arcade-main.png');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
-.game-wrapper h1 {
+.game-title {
+    position: relative;
     text-align: center;
-    font-size: xx-large;
-    text-shadow: chartreuse 5px 10px;
+    margin: 13%;
+    text-shadow: green 10px 5px;
 }
 
 .game-screen {
-   position: absolute;
-   width: 30%;
-   height: 42%;
-   left: 35.5%;
-   top: 33%;
-   text-align: center;
-   border-radius: 5px;
+    position: relative;
+    top: 8%;
+    left: 10%;
+    width: 80%;
+    height: 40vh;
+    min-height: 300px;
+    border-radius: 10px;
+    text-align: center;
 }
 
 .level-one {
-    background-image: url('../media/images/basket-level.jpg');
+    background-image: url('../media/images/level-1-background.jpg');
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
 }
