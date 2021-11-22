@@ -5,7 +5,7 @@
 
 html,
 body {
-    background-image: url('../media/images/body-background.jpg');
+    background-image: url('../media/images/main/body-background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     margin: 0;
@@ -17,10 +17,10 @@ body {
     left: 33%;
     height: 100vh;
     width: 35%;
-    min-width: 500px;
+    min-width: 600px;
     margin: auto;
     padding: 10px;
-    background-image: url('../media/images/arcade-main.png');
+    background-image: url('../media/images/main/arcade-main.png');
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -30,6 +30,13 @@ body {
     text-align: center;
     margin: 13%;
     text-shadow: green 10px 5px;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
 
 .game-screen {
@@ -40,12 +47,77 @@ body {
     height: 40vh;
     min-height: 300px;
     border-radius: 10px;
-    text-align: center;
+}
+
+#screen {
+    cursor: url('../media/images/main/sniper-pointer.cur'), auto;
+    min-width: 500px;
 }
 
 .level-one {
-    background-image: url('../media/images/level-1-background.jpg');
+    background-image: url('../media/images/levels/level-1-background.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+}
+
+#indicators {
+    position: relative;
+    background-color: white;
+    opacity: 0.8;
+    border-radius: 10px;
+    top: 5px;
+    left: 5px;
+    width: 500px;
+    max-width: 500px;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+
+}
+#lives {
+    display: inline-block;
+    position: relative;
+    top: 5px;
+    left: 5px;
+    width: 200px;
+}
+
+#time {
+    display: inline-block;
+    position: relative;
+    width: 100px;
+    text-align: center;
+    line-height: 35px;
+    margin: 0 auto;
+}
+
+#time div {
+    display: inline-block;
+    position: relative;
+    height: 100%;
+    font-size: 35px;
+}
+
+#bullets {
+    position: relative;
+    display: inline-block;
+    float: right;
+    width: 100px;
+}
+
+.heart-full,
+.heart-half,
+.heart-void {
+    height: 35px;
+    width: 35px;
+}
+.bullet-JS{
+    padding-top: 5px;
+    width: 15px;
+    height: 40px;
 }
