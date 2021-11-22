@@ -13,10 +13,8 @@ body {
 }
 
 .game-wrapper {
-    position:absolute;
-    left: 33%;
     height: 100vh;
-    width: 35%;
+    width: 650px;
     min-width: 600px;
     margin: auto;
     padding: 10px;
