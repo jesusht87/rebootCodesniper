@@ -10,8 +10,8 @@ function CodeSniper() {
    this.weapon = {
        magazine: 5,
        shot: function() {
-           var shotAudio = new Audio('./media/sound/shot-sound.mp3')
-           var unloadedAudio = new Audio('./media/sound/unloaded-sound.mp3')
+           var shotAudio = new Audio('media/sound/shot-sound.mp3')
+           var unloadedAudio = new Audio('media/sound/unloaded-sound.mp3')
            if (self.weapon.magazine > 0) {
                shotAudio.play();
                let bulletMagazine = document.getElementById('bullets');
@@ -26,9 +26,9 @@ function CodeSniper() {
        },
 
        reload: function() {
-           var audio = new Audio('./media/sound/reload.mp3')
+           var audio = new Audio('media/sound/reload.mp3')
            audio.play();
-           
+
            let reloadBullets = document.getElementById('bullets')
            
            if(self.weapon.magazine > 0) {
@@ -43,7 +43,7 @@ function CodeSniper() {
        
            for (var i = 0; i < self.weapon.magazine; i++) {
                 let bulletsJS = document.createElement('img')
-                bulletsJS.src = './media/images/counters/bullet-JS.png'
+                bulletsJS.src = 'media/images/counters/bullet-JS.png'
                 bulletsJS.classList.add('bullet-JS')
                 bulletsJS.setAttribute('id',`bullet-JS${i+1}`)
                 reloadBullets.appendChild(bulletsJS)
@@ -71,7 +71,7 @@ function CodeSniper() {
        
        for (var i = 0; i < this.player.lives; i++) {
            let livesChild = document.createElement('img');
-           livesChild.src = './media/images/counters/heart-full.png';
+           livesChild.src = 'media/images/counters/heart-full.png';
            livesChild.classList.add('heart-full');
            initialLives.appendChild(livesChild);
        }
@@ -86,7 +86,7 @@ function CodeSniper() {
        
        for (var i = 0; i < this.weapon.magazine; i++) {
             let bulletsJS = document.createElement('img')
-            bulletsJS.src = './media/images/counters/bullet-JS.png'
+            bulletsJS.src = 'media/images/counters/bullet-JS.png'
             bulletsJS.classList.add('bullet-JS')
             bulletsJS.setAttribute('id',`bullet-JS${i+1}`)
             initialBullets.appendChild(bulletsJS)
