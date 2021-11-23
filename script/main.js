@@ -1,3 +1,5 @@
+var gameIsOn = false;
+
 const stages = [{
         level: 1,
         enemyRate: [3000, 5000], //1 new enemy between 3 and 5 seconds (random)
@@ -91,11 +93,28 @@ function CodeSniper() {
         self.player.reload()
         //Create timer to introduce new enemies.
         self.enemyAppear();
+
+        window.addEventListener('click', e => {
+            if (e.target.getAttribute('id') == 'stage' || e.target.getAttribute('class') == 'enemy') {
+                this.player.shot(e.target);
+            }
+        })
+    
+        window.addEventListener('keydown', e => {
+            if (e.key == 'r') {
+               this.player.reload();
+            }
+        })
     }
 }
 
 let sniper = new CodeSniper();
-sniper.start();
+
+window.addEventListener('click', e => {
+    if (e.target.getAttribute('id') === 'start') {
+        if (gameIsOn === false) {sniper.start(); gameIsOn=true;}
+    }
+})
 
 
 

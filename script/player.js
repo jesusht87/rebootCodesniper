@@ -79,17 +79,4 @@ function Player() {
             }
     }
 
-    window.addEventListener('click', e => {
-        if (e.target.getAttribute('id') == 'stage' || e.target.getAttribute('class') == 'enemy') {
-            this.shot(e.target);
-        }
-    })
-
-    window.addEventListener('keydown', e => {
-        if (e.key == 'r') {
-           this.reload();
-        }
-    })
-
 }
-
