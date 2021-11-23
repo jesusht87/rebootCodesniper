@@ -29,9 +29,7 @@ function Player() {
             var shotAudio = new Audio('media/sound/shot-sound.mp3')
             shotAudio.play();
             this.updateMagazine('shot');
-        }
-        else
-            this.unloaded();
+        } else this.unloaded();
 
         if (target.getAttribute('class') == 'enemy') {
             let parent = document.getElementById('stage')

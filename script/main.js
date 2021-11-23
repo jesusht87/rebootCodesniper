@@ -9,7 +9,8 @@ const stages = [{
         level: 2,
         enemyRate: [2500, 4000], 
         timer: 70000,
-        cleared: false
+        cleared: false,
+        class: 'level-two'
     }]
     
 function Stage(level) {
@@ -64,30 +65,21 @@ function CodeSniper() {
         }
     
     this.enemyAppear = () => {
-           let enemyIntervalTimer = Math.floor(Math.random() * (5000 - 3000 + 1) + 3000);
+           let enemyIntervalTimer = Math.floor(Math.random() * (this.level.stage.enemyRate[1] - this.level.stage.enemyRate[0] + 1) + this.level.stage.enemyRate[0]);
            this.enemyInterval = setInterval(() => {
-               self.enemy.create();
-               if (self.stage.stageCleared == true) {
+               
+               this.enemyList.push(new Enemy);
+               this.enemyList[this.enemyList.length-1].create();
+
+               if (self.level.stage.cleared == true) {
                    clearInterval(this.enemyInterval)
                } else {
                    clearInterval(this.enemyInterval)
-                   self.stage.enemyAppear();
+                   self.enemyAppear();
                }
 
             },enemyIntervalTimer);
         }
-
-    this.game = () => {
-        //game properties
-        countDown = 0,
-        //game functions
- 
-        over = () => {
-            //Show game over and a count down with Continue?.
-            //If continue button is pressed then restart level at the same level.
-            //if continue button is not pressed until countdown = 0, then game is over and returns to main page
-        }
-    }
     
     this.start = () => {
         self.level.screen();
@@ -97,14 +89,13 @@ function CodeSniper() {
         self.setCountdown();
         //Load Weapon
         self.player.reload()
-        //Create enemy
-        self.stage.enemyAppear()
+        //Create timer to introduce new enemies.
+        self.enemyAppear();
     }
 }
 
-// let sniper = new CodeSniper();
-
-// sniper.start();
+let sniper = new CodeSniper();
+sniper.start();
 
 
 
