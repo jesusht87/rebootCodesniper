@@ -3,7 +3,9 @@ function CodeSniper() {
     const self = this;
 
     this.player = {
+        //player properties
         health: 3,
+        //player functions
         updateHealth: function () {
             //gets the lives counter from the DOM
             let healthPoints = document.getElementById('lives')
@@ -24,7 +26,9 @@ function CodeSniper() {
         }
     }
     this.weapon = {
+        //weapon properties
         magazine: 5,
+        //weapon functions
         shot: function () {
             //get the audio files
             var shotAudio = new Audio('media/sound/shot-sound.mp3')
@@ -38,13 +42,11 @@ function CodeSniper() {
                 unloadedAudio.play();
             }
         },
-
         reload: function () {
             var audio = new Audio('media/sound/reload.mp3')
             audio.play();
             self.weapon.updateBullets('reload');
         },
-
         updateBullets: function(type) {
             let bulletMagazine = document.getElementById('bullets');
             
@@ -75,10 +77,12 @@ function CodeSniper() {
         },
     }
     this.enemy = {
+        //enemy properties
         positionLimits: [140, 320, 0, 480],  // 0 = minY, 1 = maxY, 2 = minX, 3 = maxX
-        dimensions: [30, 60], //  0 = width 1 = height
+        dimensions: [35, 60], //  0 = width 1 = height
         enemyList: [],
         latestID: 0,
+        //enemy functions
         create: function () {
             const stage = document.getElementById('stage')
 
@@ -119,30 +123,58 @@ function CodeSniper() {
         }
     }
     this.stage = {
+        //stage properties
         level: 0,
         timer: 60000,
-        setTimer: function() {
+        enemies: 0,
+        stageCleared: false,
+        //stage functions
+        updateTimer: function() {
             //this code sets up the timer on the page. Timer has +5s per level. 
             //Level increases each time a stage is cleared.
-            let initialTimer = document.getElementById('time')
+            let countDownTimer = document.getElementById('time')
         
             self.stage.timer += (5000 * self.stage.level)
+
+            //checks if there's already a timer, in which case, removes the timer from the screen to add the new one.
+            if(document.getElementsByClassName('timer').length > 0) {
+                let currentTimer = document.querySelectorAll('.timer')
+                        currentTimer.forEach(e => {
+                            countDownTimer.removeChild(e)
+                        });
+            }
 
             let countDown = document.createElement('div')
             countDown.classList.add('timer')
             countDown.innerText = (self.stage.timer / 1000)
-            initialTimer.appendChild(countDown)
+            countDownTimer.appendChild(countDown)
         },
         setCountdown: function() {
             //Need a function that will start a countdown in seconds.
             //If timer reaches 0, calls game.clear()
+            this.interval = setInterval( () => {
+                self.stage.timer -= 1000;
+                self.stage.updateTimer();
+                if(self.stage.timer === 0) {
+                    clearInterval(this.interval);
+                    self.game.clear();
+                }
+            },1000);
+
         },
         enemyAppear: function() {
-            setInterval(self.enemy.create,5000);
+           this.enemyInterval = setInterval(() => {
+               self.enemy.create();
+               if (self.stage.stageCleared == true) {
+                   clearInterval(this.enemyInterval)
+               }
+            },5000);
         }
     }
-
     this.game = {
+        //game properties
+        countDown: 0,
+        //game functions
         start: function () {
             //mouse left click shot
             window.addEventListener('click', e => {
@@ -160,14 +192,16 @@ function CodeSniper() {
     
             //Initial Lives
             self.player.updateHealth();
-            //Start Stage Timer
-            self.stage.setTimer();
+            //Start Stage Timer CountDown
+            self.stage.setCountdown();
             //Load Weapon
             self.weapon.reload()
             //Create enemy
             self.stage.enemyAppear()
         },
         clear: function () {
+            window.alert('Te has pasado la fase');
+            self.stage.stageCleared = true;
         },
         over: function() {
         }

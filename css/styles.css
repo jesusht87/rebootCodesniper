@@ -129,7 +129,9 @@ body {
    
 }
 .enemy {
-    background-color: red;
+    background-image: url('../media/images/characters/enemyStand1.png');
+    background-size: cover;
+    background-repeat: no-repeat;
     border-collapse: collapse;
     position: absolute;
     overflow: hidden;
