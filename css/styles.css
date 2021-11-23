@@ -103,7 +103,6 @@ body {
 
 #bullets {
     position: relative;
-    display: inline-block;
     float: right;
     width: 100px;
 }
@@ -114,11 +113,17 @@ body {
     height: 35px;
     width: 35px;
 }
+
+.heart-full {
+    src: url('../media/images/counters/heart-full.png');
+}
+
 .bullet-JS{
     padding-top: 5px;
     width: 15px;
     height: 40px;
 }
+
 #stage {
     position: absolute;
     top: 0;
