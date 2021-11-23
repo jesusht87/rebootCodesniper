@@ -130,6 +130,7 @@ body {
 }
 .enemy {
     background-color: red;
-    position: relative;
+    border-collapse: collapse;
+    position: absolute;
     overflow: hidden;
 }
