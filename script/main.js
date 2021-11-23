@@ -26,7 +26,18 @@ function CodeSniper() {
         },
 
         kill: function() {
-            //Kill must identify the id of enemy that has been clicked.
+            //Kill must identify the id of enemy that has been clicked. OK
+            let enemyToRemove = document.getElementById(enemyKilled)
+            let parent = document.getElementById('stage')
+            parent.removeChild(enemyToRemove)
+            
+            
+            //let bulletToRemove = document.getElementById(`bullet-JS${self.weapon.magazine}`)
+            //        bulletMagazine.removeChild(bulletToRemove)
+            //        self.weapon.magazine--;
+            
+
+
             //Must retrieve the id of the attack timeout of the enemy.
             //Must remove the div with id of the clicked enemy
             //Must stop the attack timeout.
@@ -36,6 +47,10 @@ function CodeSniper() {
     this.weapon = {
         //weapon properties
         magazine: 5,
+
+        //saves the id of a shot enemy
+        enemyKilled: '',
+
         //weapon functions
         shot: function () {
             //get the audio files
@@ -193,6 +208,10 @@ function CodeSniper() {
             window.addEventListener('click', e => {
                 if (e.target.getAttribute('id') == 'stage' || e.target.getAttribute('class') == 'enemy') {
                     self.weapon.shot();
+                }
+                if (e.target.getAttribute('class') == 'enemy'){
+                    enemyKilled = e.target.getAttribute('id')
+                    self.player.kill()
                 }
             })
     
