@@ -23,6 +23,14 @@ function CodeSniper() {
                 heart.classList.add('heart-full');
                 healthPoints.appendChild(heart);
             }
+        },
+
+        kill: function() {
+            //Kill must identify the id of enemy that has been clicked.
+            //Must retrieve the id of the attack timeout of the enemy.
+            //Must remove the div with id of the clicked enemy
+            //Must stop the attack timeout.
+            //Must remove enemy from enemy.enemyList array.
         }
     }
     this.weapon = {
@@ -61,7 +69,7 @@ function CodeSniper() {
                         //remove any remaining bullet;
                         let currentBullets = document.querySelectorAll('.bullet-JS')
                         currentBullets.forEach(e => {
-                            reloadBullets.removeChild(e)
+                            bulletMagazine.removeChild(e)
                         });
                     }
                     self.weapon.magazine = 5;
@@ -78,7 +86,7 @@ function CodeSniper() {
     }
     this.enemy = {
         //enemy properties
-        positionLimits: [140, 320, 0, 480],  // 0 = minY, 1 = maxY, 2 = minX, 3 = maxX
+        positionLimits: [140, 320, 0, 475],  // 0 = minY, 1 = maxY, 2 = minX, 3 = maxX
         dimensions: [35, 60], //  0 = width 1 = height
         enemyList: [],
         latestID: 0,
@@ -91,9 +99,10 @@ function CodeSniper() {
             // We do this to ensure the enemy appears inside the screen and standing in the floor (max and min x and y are in the positionLimits variable)
             let randX = Math.floor(Math.random() * (self.enemy.positionLimits[3] - self.enemy.positionLimits[2] + 1) + self.enemy.positionLimits[2]);
             let randY = Math.floor(Math.random() * (self.enemy.positionLimits[1] - self.enemy.positionLimits[0] + 1) + self.enemy.positionLimits[0]);
+            let randTimeOut = Math.floor(Math.random() * (5000 - 3000 + 1) + 3000)
 
             //push a new enemy into the enemyList with their initial positions.
-            self.enemy.enemyList.push({id:self.enemy.latestID, x: randX, y: randY})
+            self.enemy.enemyList.push({id:self.enemy.latestID, x: randX, y: randY, attackTimeout: randTimeOut})
             //increase the latestID by 1
             self.enemy.latestID++
 
@@ -115,18 +124,16 @@ function CodeSniper() {
         attack: function() {
             //Enemy must attack at a variable time between 3 to 5 seconds.
             //After attacking, the enemy won't attack again and will just disappear.
-            //Attack must check if healthPoints of player is 0, in which case it will play game.over()
+                    //Enemy must retrieve timeoutid and stop it
+                    //Enemy must retrieve div id and remove from DOM after 1 more second.
+            //Attack must check if player.health == 0, in which case it will play game.over()
+            //Attack must update player.health and must update DOM to remove hearts.
         },
-        kill: function() {
-            //This function will remove the enemy from the stage, as if it was killed.
-            //Also will remove any timeout or interval the enemy has initiated. (attack and move interval/timeout)
-        }
     }
     this.stage = {
         //stage properties
         level: 0,
         timer: 60000,
-        enemies: 0,
         stageCleared: false,
         //stage functions
         updateTimer: function() {
@@ -134,7 +141,8 @@ function CodeSniper() {
             //Level increases each time a stage is cleared.
             let countDownTimer = document.getElementById('time')
         
-            self.stage.timer += (5000 * self.stage.level)
+            //this paramater will increase the timer by 5s in the next level only at level start.
+            //self.stage.timer += (5000 * self.stage.level)
 
             //checks if there's already a timer, in which case, removes the timer from the screen to add the new one.
             if(document.getElementsByClassName('timer').length > 0) {
@@ -163,12 +171,17 @@ function CodeSniper() {
 
         },
         enemyAppear: function() {
+           let enemyIntervalTimer = Math.floor(Math.random() * (5000 - 3000 + 1) + 3000);
            this.enemyInterval = setInterval(() => {
                self.enemy.create();
                if (self.stage.stageCleared == true) {
                    clearInterval(this.enemyInterval)
+               } else {
+                   clearInterval(this.enemyInterval)
+                   self.stage.enemyAppear();
                }
-            },5000);
+
+            },enemyIntervalTimer);
         }
     }
     this.game = {
@@ -200,10 +213,15 @@ function CodeSniper() {
             self.stage.enemyAppear()
         },
         clear: function () {
+            //Show Game Clear, number of enemies killed and prepare next level.
+            //don't launch next level until "next level" button is shot.
             window.alert('Te has pasado la fase');
             self.stage.stageCleared = true;
         },
         over: function() {
+            //Show game over and a count down with Continue?.
+            //If continue button is pressed then restart level at the same level.
+            //if continue button is not pressed until countdown = 0, then game is over and returns to main page
         }
     }
 
