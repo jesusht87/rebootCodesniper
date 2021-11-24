@@ -1,11 +1,12 @@
 const positionLimits = [140, 320, 0, 475]  // 0 = minY, 1 = maxY, 2 = minX, 3 = maxX
 var enemyCount = 0
 
-function Enemy() {
+function Enemy(level) {
+    this.levelPositions = stages.filter(e => { return e.level === level })[0].maplimits;
     //enemy properties
     this.dimensions = [35, 60] //  0 = width 1 = height
-    this.posX = Math.floor(Math.random() * (positionLimits[3] - positionLimits[2] + 1) + positionLimits[2])
-    this.posY = Math.floor(Math.random() * (positionLimits[1] - positionLimits[0] + 1) + positionLimits[0])
+    this.posX = Math.floor(Math.random() * (this.levelPositions[3] - this.levelPositions[2] + 1) + this.levelPositions[2])
+    this.posY = Math.floor(Math.random() * (this.levelPositions[1] - this.levelPositions[0] + 1) + this.levelPositions[0])
     this.timeOut = Math.floor(Math.random() * (5000 - 3000 + 1) + 3000)
     
     //enemy functions

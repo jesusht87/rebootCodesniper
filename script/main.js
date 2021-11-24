@@ -5,14 +5,16 @@ const stages = [{
         enemyRate: [3000, 5000], //1 new enemy between 3 and 5 seconds (random)
         timer: 60000, //level timer is 1 minute
         cleared: false,
-        class: 'level-one'
+        class: 'level-one',
+        maplimits: [190, 320, 0, 475]
     },
     {
         level: 2,
         enemyRate: [2500, 4000], 
         timer: 70000,
         cleared: false,
-        class: 'level-two'
+        class: 'level-two',
+        maplimits: [190, 320, 0, 475]
     }]
     
 function Stage(level) {
@@ -46,13 +48,16 @@ function Stage(level) {
     this.screen = () => {
         let screen = document.getElementById('stage')
         screen.classList.add(this.stage.class)
+        let indicators = document.getElementById('indicators')
+        indicators.style.visibility = 'visible';
     }
 }
 
 function CodeSniper() {
     const self = this;
+    this.stagelevel = 1; //Game starts on level 1.
     this.player = new Player();
-    this.level = new Stage(1);
+    this.level = new Stage(this.stagelevel);
     this.enemyList = []
     
     this.setCountdown = () => {
@@ -70,7 +75,7 @@ function CodeSniper() {
            let enemyIntervalTimer = Math.floor(Math.random() * (this.level.stage.enemyRate[1] - this.level.stage.enemyRate[0] + 1) + this.level.stage.enemyRate[0]);
            this.enemyInterval = setInterval(() => {
                
-               this.enemyList.push(new Enemy);
+               this.enemyList.push(new Enemy(this.stagelevel));
                this.enemyList[this.enemyList.length-1].create();
 
                if (self.level.stage.cleared == true) {

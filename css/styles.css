@@ -77,12 +77,14 @@ body {
 #indicators {
     position: relative;
     background-color: white;
+    visibility: hidden;
     opacity: 0.8;
     border-radius: 10px;
     top: 5px;
     left: 5px;
     width: 500px;
     max-width: 500px;
+    height:45px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
