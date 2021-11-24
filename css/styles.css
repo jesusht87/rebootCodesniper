@@ -99,6 +99,24 @@ a.button:active{
     border-radius: 10px;
 }
 
+.next-stage {
+    background-image: url('../media/images/levels/next-stage.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 380px;
+    border-radius: 10px;
+}
+
+.game-over {
+    background-image: url('../media/images/levels/game-over.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 380px;
+    border-radius: 10px;
+}
+
 .level-one {
     background-image: url('../media/images/levels/level-1-background.jpg');
     background-size: cover;
