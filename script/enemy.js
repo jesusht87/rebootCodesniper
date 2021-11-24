@@ -38,10 +38,4 @@ function Enemy() {
         //Attack must check if player.health == 0, in which case it will play game.over()
         //Attack must update player.health and must update DOM to remove hearts.
     }
-
-    this.removeEnemy = () => {
-        //Removes the specific enemy from the DOM after being shooted
-        enemyDeleted = e.target.getAttribute('id')
-        enemyDeleted.remove()
-    }
 }
