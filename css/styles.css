@@ -62,6 +62,15 @@ body {
     border-radius: 10px;
 }
 
+.homepage {
+    background-image: url('../media/images/levels/homepage.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 380px;
+    border-radius: 10px;
+}
+
 #screen {
     cursor: url('../media/images/main/sniper-pointer.cur'), auto;
     min-width: 500px;
