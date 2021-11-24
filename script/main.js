@@ -102,7 +102,7 @@ function CodeSniper() {
 
         window.addEventListener('click', e => {
             if (e.target.getAttribute('id') == 'stage' || e.target.getAttribute('class') == 'enemy') {
-                this.player.shot(e.target);
+                this.player.shot(e.target)
             }
         })
     
