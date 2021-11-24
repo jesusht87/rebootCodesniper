@@ -69,6 +69,7 @@ function CodeSniper() {
                 if(self.level.timeDown === 0) {
                     clearInterval(this.interval);
                     self.level.clear();
+                    clearInterval(this.enemyInterval);
                 }
             },1000);
         }
@@ -108,7 +109,7 @@ function CodeSniper() {
 
         window.addEventListener('click', e => {
             if (e.target.getAttribute('id') == 'stage' || e.target.getAttribute('class') == 'enemy') {
-                this.player.shot(e.target)
+                
                 if (e.target.getAttribute('class') == 'enemy') {
                     if (this.player.magazine > 0) {
                         let parent = document.getElementById('stage')
@@ -123,6 +124,7 @@ function CodeSniper() {
                         console.log(this.enemyList)
                     }
                 }
+                this.player.shot(e.target)
             }
         })
     
