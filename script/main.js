@@ -77,18 +77,23 @@ function CodeSniper() {
            let enemyIntervalTimer = Math.floor(Math.random() * (this.level.stage.enemyRate[1] - this.level.stage.enemyRate[0] + 1) + this.level.stage.enemyRate[0]);
            this.enemyInterval = setInterval(() => {
                
-               this.enemyList.push(new Enemy(this.stagelevel));
-               this.enemyList[this.enemyList.length-1].create();
-
+               this.enemyList.push(new Enemy(this.stagelevel, this.player))
+               this.enemyList[this.enemyList.length-1].create()
+               this.enemyAttack()
+             
                if (self.level.stage.cleared == true) {
                    clearInterval(this.enemyInterval)
                } else {
                    clearInterval(this.enemyInterval)
                    self.enemyAppear();
                }
-
             },enemyIntervalTimer);
         }
+
+    this.enemyAttack = () => {
+        let randCountdown = this.enemyList[this.enemyList.length-1].timeOut
+        this.enemyList[this.enemyList.length-1].attackTimer = setTimeout(this.enemyList[this.enemyList.length-1].attack, randCountdown)
+    }
     
     this.start = () => {
         self.level.screen();
@@ -104,6 +109,20 @@ function CodeSniper() {
         window.addEventListener('click', e => {
             if (e.target.getAttribute('id') == 'stage' || e.target.getAttribute('class') == 'enemy') {
                 this.player.shot(e.target)
+                if (e.target.getAttribute('class') == 'enemy') {
+                    if (this.player.magazine > 0) {
+                        let parent = document.getElementById('stage')
+                        parent.removeChild(e.target)
+                        let targetIndex = this.enemyList.indexOf(this.enemyList.find(f => 
+                            f.enemyTag === e.target.getAttribute('id')
+                            ))
+                        clearTimeout(this.enemyList.find(f => 
+                        f.enemyTag === e.target.getAttribute('id')
+                        ).attackTimer) 
+                        this.enemyList.splice(targetIndex, 1)
+                        console.log(this.enemyList)
+                    }
+                }
             }
         })
     
@@ -112,6 +131,14 @@ function CodeSniper() {
                this.player.reload();
             }
         })
+    }
+
+    this.gameOver = () => {
+        
+    }
+
+    this.nextStage = () => {
+
     }
 }
 
