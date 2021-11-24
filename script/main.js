@@ -96,12 +96,7 @@ function CodeSniper() {
 
         window.addEventListener('click', e => {
             if (e.target.getAttribute('id') == 'stage' || e.target.getAttribute('class') == 'enemy') {
-                if (this.player.magazine > 0) { // Aditional condition checking if magazine have bullets before the shot. If not, plays empty magazine sound.
                 this.player.shot(e.target)
-                
-                } else {
-                    this.player.unloaded()
-                }
             }
         })
     

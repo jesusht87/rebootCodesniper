@@ -29,12 +29,12 @@ function Player() {
             var shotAudio = new Audio('media/sound/shot-sound.mp3')
             shotAudio.play();
             this.updateMagazine('shot');
+            if (target.getAttribute('class') == 'enemy') {
+                let parent = document.getElementById('stage')
+                parent.removeChild(target)
+            }
         } else this.unloaded();
-
-        if (target.getAttribute('class') == 'enemy') {
-            let parent = document.getElementById('stage')
-            parent.removeChild(target)
-        }
+     
     }
     
     this.unloaded = () => {
