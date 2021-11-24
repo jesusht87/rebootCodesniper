@@ -1,5 +1,4 @@
-const positionLimits = [140, 320, 0, 475]  // 0 = minY, 1 = maxY, 2 = minX, 3 = maxX
-var enemyCount = 0
+var enemyCount = 0 //used for the creation of the unique id of each enemy.
 
 function Enemy(level) {
     this.levelPositions = stages.filter(e => { return e.level === level })[0].maplimits;

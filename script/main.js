@@ -1,6 +1,7 @@
 
 
 var gameIsOn = false;
+
 const stages = [{
         level: 1,
         enemyRate: [3000, 5000], //1 new enemy between 3 and 5 seconds (random)
@@ -114,15 +115,12 @@ function CodeSniper() {
     }
 }
 
-let sniper = new CodeSniper();
-
 window.addEventListener('click', e => {
     if (e.target.getAttribute('id') === 'start') {
-        if (gameIsOn === false) {sniper.start(); gameIsOn=true;}
+        if (gameIsOn === false) {
+            let sniper = new CodeSniper();
+            sniper.start(); 
+            gameIsOn=true;
+        }
     }
 })
-
-
-
-
-
