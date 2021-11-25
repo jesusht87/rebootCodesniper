@@ -16,16 +16,16 @@ function Enemy(level, player) {
         const stage = document.getElementById('stage')
 
         //creates the enemy in DOM.
-        let newEnemy = document.createElement('div')
-        newEnemy.classList.add('enemy')
+        this.html = document.createElement('div')
+        this.html.classList.add('enemy')
 
         //An enemy is always unique, and only may appear 1 time on screen, so it always picks the latest enemy object in the array.
-        newEnemy.id = `enemy${enemyCount}`
-        newEnemy.style.width = this.dimensions[0]+'px'
-        newEnemy.style.height = this.dimensions[1]+'px'
-        newEnemy.style.left = this.posX + 'px'
-        newEnemy.style.top = this.posY + 'px'
-        stage.appendChild(newEnemy)
+        this.html.id = `enemy${enemyCount}`
+        this.html.style.width = this.dimensions[0]+'px'
+        this.html.style.height = this.dimensions[1]+'px'
+        this.html.style.left = this.posX + 'px'
+        this.html.style.top = this.posY + 'px'
+        stage.appendChild(this.html)
         enemyCount++
     }
 
@@ -47,4 +47,13 @@ function Enemy(level, player) {
         //Attack must check if player.health == 0, in which case it will play game.over()
         //Attack must update player.health and must update DOM to remove hearts.
     }
+
+    this.die = () => {
+        // eliminar elemento del dom
+        document.getElementById('stage').removeChild(this.html)        
+        // parar ataque
+        clearTimeout(this.attackTimer)
+    }
+
+    this.create()
 }

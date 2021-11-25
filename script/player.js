@@ -1,12 +1,11 @@
 function Player() {
-    //player parameters
     this.health = 3
     this.magazine = 5
 
-    //player functions
     this.updateHP = () => {
             //gets the lives counter from the DOM
             let HP = document.getElementById('lives')
+            
             //checks and removes any health counter currently placed.
             if (document.querySelectorAll('.heart-full').length > 0) {
                 let current = document.querySelectorAll('.heart-full')
@@ -23,15 +22,13 @@ function Player() {
             }
     }
     
-    this.shot = (target) => {
-        
+    this.shot = () => {
         if (this.magazine > 0) {
             var shotAudio = new Audio('media/sound/shot-sound.mp3')
             shotAudio.play();
             this.updateMagazine('shot');
             
         } else this.unloaded();
-     
     }
     
     this.unloaded = () => {
@@ -76,5 +73,6 @@ function Player() {
         }
     }
 
-
+    this.updateHP()
+    this.reload()
 }
