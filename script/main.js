@@ -4,19 +4,30 @@ var gameIsOn = false;
 
 const stages = [{
         level: 1,
-        enemyRate: [3000, 5000], //1 new enemy between 3 and 5 seconds (random)
+        enemyRate: [1000, 5000], //1 new enemy between 1 and 5 seconds (random)
         timer: 60000, //level timer is 1 minute
         cleared: false,
         class: 'level-one',
-        maplimits: [190, 320, 0, 475]
+        maplimits: [190, 320, 0, 475],
+        bgm: new Audio('media/sound/stage-music-1.mp3')
     },
     {
         level: 2,
-        enemyRate: [2500, 4000], 
+        enemyRate: [500, 4500], 
         timer: 70000,
         cleared: false,
         class: 'level-two',
-        maplimits: [190, 320, 0, 475]
+        maplimits: [190, 320, 0, 475],
+        bgm: new Audio('media/sound/stage-music-2.mp3')
+    },
+    {
+        level: 3,
+        enemyRate: [500, 4500], 
+        timer: 70000,
+        cleared: false,
+        class: 'level-two',
+        maplimits: [190, 320, 0, 475],
+        bgm: new Audio('media/sound/stage-music-3.mp3')
     }]
     
 function Stage(level) {
@@ -69,6 +80,7 @@ function CodeSniper() {
                 if(self.level.timeDown === 0) {
                     clearInterval(this.interval);
                     self.level.clear();
+                    self.level.stage.bgm.pause();
                     clearInterval(this.enemyInterval);
                 }
             },1000);
@@ -98,6 +110,9 @@ function CodeSniper() {
     
     this.start = () => {
         self.level.screen();
+        self.level.stage.bgm.play();
+        console.log(document.getElementsByTagName('audio')[0].remove())
+        
         //Initial Lives
         self.player.updateHP();
         //Start Stage Timer CountDown
