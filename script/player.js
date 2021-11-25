@@ -46,34 +46,34 @@ function Player() {
     }
 
     this.updateMagazine = type => {
-            let bulletMagazine = document.getElementById('bullets');
-            
-            switch (type) {
-                case 'shot':
-                    let bulletToRemove = document.getElementById(`bullet-JS${this.magazine}`)
-                    bulletMagazine.removeChild(bulletToRemove)
-                    this.magazine--;
-                    break;
-                case 'reload':
-                    if (document.querySelectorAll('.bullet-JS').length > 0) {
-                        //remove any remaining bullet;
-                        let currentBullets = document.querySelectorAll('.bullet-JS')
-                        currentBullets.forEach(e => {
-                            bulletMagazine.removeChild(e)
-                        });
-                    }
+        let bulletMagazine = document.getElementById('bullets');
 
-                    this.magazine = 5;
+        switch (type) {
+            case 'shot':
+                let bulletToRemove = document.getElementById(`bullet-JS${this.magazine}`)
+                bulletMagazine.removeChild(bulletToRemove)
+                this.magazine--;
+                break;
+            case 'reload':
+                if (document.querySelectorAll('.bullet-JS').length > 0) {
+                    //remove any remaining bullet;
+                    let currentBullets = document.querySelectorAll('.bullet-JS')
+                    currentBullets.forEach(e => {
+                        bulletMagazine.removeChild(e)
+                    });
+                }
 
-                    for (var i = 0; i < this.magazine; i++) {
-                        let bulletsJS = document.createElement('img')
-                        bulletsJS.classList.add('bullet-JS')
-                        bulletsJS.src = 'media/images/counters/bullet-JS.png'
-                        bulletsJS.setAttribute('id', `bullet-JS${i + 1}`)
-                        bulletMagazine.appendChild(bulletsJS)
-                    }
-                    break;
-            }
+                this.magazine = 5;
+
+                for (var i = 0; i < this.magazine; i++) {
+                    let bulletsJS = document.createElement('img')
+                    bulletsJS.classList.add('bullet-JS')
+                    bulletsJS.src = 'media/images/counters/bullet-JS.png'
+                    bulletsJS.setAttribute('id', `bullet-JS${i + 1}`)
+                    bulletMagazine.appendChild(bulletsJS)
+                }
+                break;
+        }
     }
 
 
