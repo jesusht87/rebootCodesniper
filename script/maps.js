@@ -4,7 +4,7 @@ const stages = [{
     timer: 3000, //level timer is 1 minute
     cleared: false,
     class: 'level-one',
-    maplimits: [190, 320, 0, 475],
+    mapLimits: [190, 320, 0, 475],
     bgm: new Audio('media/sound/stage-music-1.mp3')
 },
 {
@@ -13,7 +13,7 @@ const stages = [{
     timer: 3000,
     cleared: false,
     class: 'level-two',
-    maplimits: [150, 320, 0, 475],
+    mapLimits: [150, 320, 0, 475],
     bgm: new Audio('media/sound/stage-music-2.mp3')
 },
 {
@@ -22,7 +22,7 @@ const stages = [{
     timer: 3000,
     cleared: false,
     class: 'level-three',
-    maplimits: [190, 320, 0, 475],
+    mapLimits: [190, 320, 0, 475],
     bgm: new Audio('media/sound/stage-music-3.mp3')
 },
 
@@ -32,7 +32,7 @@ const stages = [{
     timer: 3000,
     cleared: false,
     class: 'level-four',
-    maplimits: [190, 320, 0, 475],
+    mapLimits: [190, 320, 0, 475],
     bgm: new Audio('media/sound/stage-music-3.mp3')
 },
 
@@ -42,7 +42,7 @@ const stages = [{
     timer: 3000,
     cleared: false,
     class: 'level-five',
-    maplimits: [190, 320, 0, 475],
+    mapLimits: [190, 320, 0, 475],
     bgm: new Audio('media/sound/stage-music-3.mp3')
 }]
 

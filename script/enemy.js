@@ -9,11 +9,8 @@ const genDirection = function () {
 }
 
 function Enemy(level, player) {
-    this.levelPositions = stages.filter(e => { return e.level === level })[0].maplimits;
     //enemy properties
     this.dimensions = [35, 60] //  0 = width 1 = height
-    this.posX = Math.floor(Math.random() * (this.levelPositions[3] - this.levelPositions[2] + 1) + this.levelPositions[2])
-    this.posY = Math.floor(Math.random() * (this.levelPositions[1] - this.levelPositions[0] + 1) + this.levelPositions[0])
     this.timeOut = Math.floor(Math.random() * (3000 - 2000 + 1) + 2000)
     this.attackTimer
     this.player = player
