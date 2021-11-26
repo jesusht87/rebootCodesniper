@@ -34,18 +34,11 @@ function Enemy(level, player) {
     }
 
     this.attack = () => {
-        if (this.player.health  > 0){
+        if (this.player.health > 0) {
             this.player.health--
             let hearts = document.getElementById('lives')
             let heartRemoved = document.getElementsByClassName('heart-full')
             hearts.removeChild(heartRemoved[0])
-
-        } 
-        //Enemy must attack at a variable time between 3 to 5 seconds.
-        //After attacking, the enemy won't attack again and will just disappear.
-                //Enemy must retrieve timeoutid and stop it
-                //Enemy must retrieve div id and remove from DOM after 1 more second.
-        //Attack must check if player.health == 0, in which case it will play game.over()
-        //Attack must update player.health and must update DOM to remove hearts.
+        }
     }
 }
