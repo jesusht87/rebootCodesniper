@@ -38,7 +38,50 @@ function Enemy(level, player) {
     }
 
     this.move = () => {
-        //enemy must be able to move around the stage
+        this.direction = genDirection();
+
+        this.movement = setInterval(() => {
+            let currentX = parseInt(this.html.style.left.replace(/px/g,''))
+            let currentY = parseInt(this.html.style.top.replace(/px/g,''))
+            switch (this.direction.x) {
+                case 'right':
+                    if(parseInt(this.html.style.left.replace(/px/g,'')) <= this.mapLimits[3]) {
+                        currentX++
+                        this.html.style.left = currentX + 'px';
+                    } else {
+                        this.direction.x = 'left'
+                    }
+                    break;
+                case 'left':
+                    if(parseInt(this.html.style.left.replace(/px/g,'')) >= this.mapLimits[2]) {
+                        currentX--
+                        this.html.style.left = currentX + 'px';
+                    } else {
+                        this.direction.x = 'right'
+                    }
+                    break;
+            }
+            switch (this.direction.y) {
+                case 'up':
+                    if(parseInt(this.html.style.top.replace(/px/g,'')) <= this.mapLimits[1]) { //bottom
+                        currentY++
+                        this.html.style.top = currentY + 'px';
+                    
+                    } else {
+                        this.direction.y = 'down'
+                    }
+                    break;
+                case 'down':
+                    if(parseInt(this.html.style.top.replace(/px/g,'')) >= this.mapLimits[0]) { //top
+                        currentY--
+                        this.html.style.top = currentY + 'px';
+                    
+                    } else {
+                        this.direction.y = 'up'
+                    }
+                    break;
+            }        
+        },this.direction.speed)
     }
 
     this.attack = () => {
