@@ -3,7 +3,7 @@ var gameIsOn = false;
 const stages = [{
     level: 1,
     enemyRate: [1000, 5000], //1 new enemy between 1 and 5 seconds (random)
-    timer: 60000, //level timer is 1 minute
+    timer: 3000, //level timer is 1 minute
     cleared: false,
     class: 'level-one',
     maplimits: [190, 320, 0, 475],
@@ -51,9 +51,37 @@ function Stage(level) {
 
     this.clear = () => {
         //Show Game Clear, number of enemies killed and prepare next level.
-        //don't launch next level until "next level" button is shot.
-        window.alert('Te has pasado la fase');
-        this.stage.cleared = true;
+        // Checks if:
+        // 1. Stops music,attack & enemy timers OK
+        // 2. Creates new DIV showing the screen "continue-screen" OK
+        // 4. In that screen, when player clicks in "Continue"...
+        //      5. Level goes up to the next number (+1)
+        //      6. Enemies array will be cleared and will dissapear from DOM
+        //      7. Changes background 
+        //      8. We call to a new CodeSniper game
+        self.level.stage.bgm.pause()
+        clearInterval(this.enemyInterval)
+        this.enemyList.forEach(enemy => {
+            clearInterval(enemy.attackTimer)
+        });
+
+        const oldStage = document.getElementById('screen')
+        let newScreen = document.createElement('div')
+        newScreen.classList.add('stage')
+        newScreen.id = `continue-screen`
+        oldStage.appendChild(newScreen)
+
+        const stages = document.getElementById('stage')
+        stages.removeChild('div')  // Eliminar enemigos del DOM?
+
+        this.stage.cleared = true; 
+
+        window.addEventListener('click', e => {
+            if (e.target.getAttribute('id') === 'continue') {
+                this.newStage()
+            }
+        })
+        
     }
 
     this.screen = () => {
@@ -160,29 +188,29 @@ function CodeSniper() {
     //      6. Enemies array will be cleared and will dissapear from DOM
     //      7. Changes background 
     //      8. We call to a new CodeSniper game
-    this.endOfStage = () => {
-        self.level.stage.bgm.pause()
-        clearInterval(this.enemyInterval)
-        this.enemyList.forEach(enemy => {
-            clearInterval(enemy.attackTimer)
-        });
+    //this.endOfStage = () => {
+    //    self.level.stage.bgm.pause()
+    //    clearInterval(this.enemyInterval)
+    //    this.enemyList.forEach(enemy => {
+    //        clearInterval(enemy.attackTimer)
+    //    });
 
-        const oldStage = document.getElementById('screen')
-        let newScreen = document.createElement('div')
-        newScreen.classList.add('stage')
-        newScreen.id = `continue-screen`
-        oldStage.appendChild(newScreen)
+    //    const oldStage = document.getElementById('screen')
+    //    let newScreen = document.createElement('div')
+    //    newScreen.classList.add('stage')
+    //    newScreen.id = `continue-screen`
+    //    oldStage.appendChild(newScreen)
 
-        const stages = document.getElementById('stage')
-        stages.removeChild('div')  // Eliminar enemigos del DOM?
+    //    const stages = document.getElementById('stage')
+    //    stages.removeChild('div')  // Eliminar enemigos del DOM?
 
-        window.addEventListener('click', e => {
-            if (e.target.getAttribute('id') === 'continue') {
-                this.newStage()
-            }
-        })
+    //    window.addEventListener('click', e => {
+    //        if (e.target.getAttribute('id') === 'continue') {
+    //            this.newStage()
+    //        }
+    //    })
 
-    }
+    //}
 
     // Prepares and clears everything, so we can build after the new stage.
     this.newStage = () => {
