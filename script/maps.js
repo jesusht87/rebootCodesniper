@@ -1,7 +1,7 @@
 const stages = [{
     level: 1,
     enemyRate: [1000, 5000], //1 new enemy between 1 and 5 seconds (random)
-    timer: 60000, //level timer is 1 minute
+    timer: 3000, //level timer is 1 minute
     cleared: false,
     class: 'level-one',
     maplimits: [190, 320, 0, 475],

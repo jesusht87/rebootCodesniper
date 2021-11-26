@@ -99,7 +99,6 @@ function CodeSniper() {
                 }
                 this.player.shot(e.target)
             }
-            this.player.shot(e.target)
         })
 
 
