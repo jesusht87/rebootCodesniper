@@ -39,6 +39,7 @@ function Enemy(level, player) {
             let hearts = document.getElementById('lives')
             let heartRemoved = document.getElementsByClassName('heart-full')
             hearts.removeChild(heartRemoved[0])
+
         } 
         //Enemy must attack at a variable time between 3 to 5 seconds.
         //After attacking, the enemy won't attack again and will just disappear.
