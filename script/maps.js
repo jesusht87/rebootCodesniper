@@ -45,3 +45,11 @@ const stages = [{
     maplimits: [190, 320, 0, 475],
     bgm: new Audio('media/sound/stage-music-3.mp3')
 }]
+
+const generateCoordinates = (level) => {
+    let limits = stages.filter(e => e.level === level)[0].mapLimits
+    let x = Math.round(Math.random() * 100) < 50 ? limits[2] : limits[3]
+    let y = Math.floor(Math.random() * (limits[1] - limits[0] + 1) + limits[0])
+
+    return [x, y]
+}
