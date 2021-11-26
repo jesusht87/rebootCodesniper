@@ -1,4 +1,5 @@
-
+let mainAudio = document.getElementsByTagName('audio')[0]
+mainAudio.volume = 0.1
 
 var gameIsOn = false;
 
@@ -117,8 +118,11 @@ function CodeSniper() {
     this.start = () => {
         self.level.screen();
         self.level.stage.bgm.play();
+        self.level.stage.bgm.volume = 0.1
         
-
+        //stop intro music
+        document.getElementsByTagName('audio')[0].pause()
+        
         //Initial Lives
         self.player.updateHP();
         //Start Stage Timer CountDown
@@ -157,35 +161,28 @@ function CodeSniper() {
     }
 
     this.gameOver = () => {
+        
         clearInterval(this.interval)
         clearInterval(this.enemyInterval)
-        let screenParent = document.getElementById('screen')
+
         let stageParent = document.getElementById('stage')
         this.enemyList.forEach(e => {
             clearTimeout(e.attackTimer)
             stageParent.removeChild(document.getElementById(e.enemyTag))
-
-
         })
         this.enemyList = []
+        
+        stageParent.classList.remove('level-one')
+        stageParent.classList.add('game-over')
 
-        let removeBackground = document.getElementById('stage')
-        removeBackground.classList.remove('level-one')
-        let screen = document.getElementById('stage')
-        screen.classList.add('game-over')
         this.level.stage.bgm.pause()
+
         document.getElementById('indicators').style.visibility = 'hidden'
 
-
-        //Parar el timer de this.enemyAppear
-        //recorrer con forEach el array enemyList
-        //en cada elemento de enemyList hacer un clearTimeout del parámetro attackTimer
-        //en cada elemento del array, comprueba cual es el índice de ese elemento
-        //elimina del array cada elemento utilizando splice
     }
 
     this.nextStage = () => {
-
+        
     }
 }
 
