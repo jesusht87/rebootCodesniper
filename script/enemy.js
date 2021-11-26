@@ -1,5 +1,13 @@
 var enemyCount = 0 //used for the creation of the unique id of each enemy.
 
+const genDirection = function () {
+    let x = Math.floor(Math.random() * 100) > 50 ? 'right' : 'left'
+    let y = Math.floor(Math.random() * 100) > 50 ? 'up' : 'down'
+    let s = Math.floor(Math.random() * (10 - 5 + 5) + 5)
+
+    return {x: x, y: y, speed: s}
+}
+
 function Enemy(level, player) {
     this.levelPositions = stages.filter(e => { return e.level === level })[0].maplimits;
     //enemy properties
