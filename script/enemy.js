@@ -9,6 +9,11 @@ const genDirection = function () {
 }
 
 function Enemy(level, player) {
+    this.coordinates = generateCoordinates(level) // [x, y]
+    
+    // [minTop, maxTop, minLeft, maxLeft]
+    this.mapLimits = stages.filter(map => map.level == level)[0].mapLimits
+
     //enemy properties
     this.dimensions = [35, 60] //  0 = width 1 = height
     this.timeOut = Math.floor(Math.random() * (3000 - 2000 + 1) + 2000)
@@ -21,16 +26,16 @@ function Enemy(level, player) {
         const stage = document.getElementById('stage')
 
         //creates the enemy in DOM.
-        let newEnemy = document.createElement('div')
-        newEnemy.classList.add('enemy')
+        this.html = document.createElement('div')
+        this.html.classList.add('enemy')
 
         //An enemy is always unique, and only may appear 1 time on screen, so it always picks the latest enemy object in the array.
-        newEnemy.id = `enemy${enemyCount}`
-        newEnemy.style.width = this.dimensions[0]+'px'
-        newEnemy.style.height = this.dimensions[1]+'px'
-        newEnemy.style.left = this.posX + 'px'
-        newEnemy.style.top = this.posY + 'px'
-        stage.appendChild(newEnemy)
+        this.html.id = `enemy${enemyCount}`
+        this.html.style.width = this.dimensions[0]+'px'
+        this.html.style.height = this.dimensions[1]+'px'
+        this.html.style.left = `${this.coordinates[0]}px`
+        this.html.style.top = `${this.coordinates[1]}px`
+        stage.appendChild(this.html)
         enemyCount++
     }
 
@@ -89,4 +94,6 @@ function Enemy(level, player) {
             hearts.removeChild(heartRemoved[0])
         }
     }
+
+    this.move()
 }

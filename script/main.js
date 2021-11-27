@@ -1,3 +1,6 @@
+let bgmPrincipal = document.getElementsByTagName('audio')
+bgmPrincipal[0].volume = 0.1
+
 var gameIsOn = false;
 
 function CodeSniper() {
@@ -68,8 +71,9 @@ function CodeSniper() {
     }
 
     this.start = () => {
-        self.level.screen();
-        self.level.stage.bgm.play();
+        self.level.screen()
+        self.level.stage.bgm.play()
+        self.level.stage.bgm.volume = 0.1
         document.getElementsByTagName('audio')[0].pause()
 
         //Initial Lives
@@ -123,7 +127,7 @@ function CodeSniper() {
         })
         this.enemyList = []
 
-        stageParent.classList.remove('level-one')
+        stageParent.classList.remove(this.level.stage.class)
         stageParent.classList.add('game-over')
 
         this.level.stage.bgm.pause()

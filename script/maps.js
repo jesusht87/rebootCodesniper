@@ -10,7 +10,7 @@ const stages = [{
 {
     level: 2,
     enemyRate: [500, 4500],
-    timer: 3000,
+    timer: 70000,
     cleared: false,
     class: 'level-two',
     mapLimits: [150, 320, 0, 475],
@@ -19,7 +19,7 @@ const stages = [{
 {
     level: 3,
     enemyRate: [500, 3500],
-    timer: 3000,
+    timer: 80000,
     cleared: false,
     class: 'level-three',
     mapLimits: [190, 320, 0, 475],
@@ -29,7 +29,7 @@ const stages = [{
 {
     level: 4,
     enemyRate: [500, 2500],
-    timer: 3000,
+    timer: 90000,
     cleared: false,
     class: 'level-four',
     mapLimits: [190, 320, 0, 475],
@@ -38,8 +38,8 @@ const stages = [{
 
 {
     level: 5,
-    enemyRate: [500, 1000],
-    timer: 3000,
+    enemyRate: [500, 2000],
+    timer: 100000,
     cleared: false,
     class: 'level-five',
     mapLimits: [190, 320, 0, 475],
