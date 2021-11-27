@@ -1,5 +1,6 @@
 function Stage(level = 1) {
     this.map = maps[level - 1]
+    console.log(this.map)
     this.timeDown = this.map.mapTime;
     this.currentLevel = level
 
@@ -34,8 +35,8 @@ function Stage(level = 1) {
     // Prepares and clears everything, so we can build after the new stage.
     this.newStage = () => {
         this.currentLevel++
-        //this.map = maps[this.currentLevel - 1]
-        //this.timeDown  = this.map.mapTime
+        this.map = maps[this.currentLevel - 1]
+        this.timeDown  = this.map.mapTime
         const continueStage = document.getElementById('stage')
         continueStage.classList.remove('next-stage')
         continueStage.classList.add(this.map.levelClass)

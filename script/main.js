@@ -6,8 +6,21 @@ function CodeSniper() {
 
     this.start = (level=1) => {
         bgmPrincipal[0].pause()
-        this.stage = new Stage(level)
-        this.player = new Player()
+        this.stage
+        if(!this.stage) {
+            this.stage = new Stage(level)
+        } else {
+            this.stage.timeDown = this.stage.map.mapTime
+            this.stage.screen()
+            this.stage.map.bgm.play()
+        }
+        this.player
+        if (!this.player) {
+            this.player = new Player()
+        } else {
+            this.player.reload()
+            this.player.updateHP()
+        }
         //Start Stage Timer CountDown
         this.chronometer();
         //Create timer to introduce new enemies.
@@ -86,6 +99,7 @@ function CodeSniper() {
         document.getElementById('stage').removeEventListener('click',shot)
         window.removeEventListener('keydown',reload)
 
+        console.log(this.stage)
         this.stage.clear();
         
         clearInterval(this.enemyInterval);
