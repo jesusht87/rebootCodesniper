@@ -1,144 +1,221 @@
 let bgmPrincipal = document.getElementsByTagName('audio')
 bgmPrincipal[0].volume = 0.1
 
-var gameIsOn = false;
-
 function CodeSniper() {
-    const self = this;
-    this.player = new Player();
-    this.level = new Stage();
     this.enemyList = []
 
-    this.setCountdown = () => {
-        this.interval = setInterval(() => {
-            self.level.timeDown -= 1000;
-            self.level.timer()
-            if (self.level.timeDown === 0) {
-                clearInterval(this.interval);
-                this.stageClear()
-            }
-        }, 1000);
-
+    this.start = (level=1) => {
+        bgmPrincipal[0].pause()
+        this.stage = new Stage(level)
+        this.player = new Player()
+        //Start Stage Timer CountDown
+        this.chronometer();
+        //Create timer to introduce new enemies.
+        this.enemyAppear();
+        //Checks player health > 0 or game over
         this.checkHealth = setInterval(function () {
-            if (this.player.health == 0) {
-                this.gameOver();
-                clearInterval(this.checkHealth)
+            if (this.player.health === 0) {
+                console.log('game over')
+                this.gameOver()
             }
-        }.bind(this),100)
+            console.log(this.checkHealth)
+        }.bind(this), 100)
+
+        //listens to shot (click the mouse on the gaming screen)
+        document.getElementById('stage').addEventListener('click', shot = function (e) {
+            let parent = document.getElementById('stage')
+            if (e.target.getAttribute('class') == 'enemy' && this.player.magazine > 0) {
+                parent.removeChild(e.target)
+                let targetIndex = this.enemyList.indexOf(this.enemyList.find(f =>
+                    f.enemyTag === e.target.getAttribute('id')
+                ))
+                clearTimeout(this.enemyList.find(f =>
+                    f.enemyTag === e.target.getAttribute('id')
+                ).attackTimer)
+                this.enemyList.splice(targetIndex, 1)
+            }
+            this.player.shot(e.target)
+        }.bind(this))
+
+        //listens to reload (r button on keyboard)
+        window.addEventListener('keydown', reload = function (e) {
+            if (e.key == 'r') {
+                this.player.reload();
+            }
+        }.bind(this))
     }
 
-    this.stageClear = () => {
-        self.level.clear();
-        self.level.stage.bgm.pause();
-        clearInterval(this.enemyInterval);
-        document.getElementById('continue').addEventListener('click', () => {
-            if (this.level.stage.cleared == true) {
-                this.level.newStage()
-                this.start()
+    this.chronometer = () => {
+        this.clock = setInterval(function() {
+            this.stage.timeDown -= 1000;
+            this.stage.refreshClock()
+            if (this.stage.timeDown === 0) {
+                clearInterval(this.clock);
+                this.stageClear()
             }
-        })
+        }.bind(this), 1000);
+    }
+
+    this.enemyAppear = () => {
+        let maxRate = this.stage.map.enemyRate[1]
+        let minRate = this.stage.map.enemyRate[0]
+        let enemyIntervalTimer = Math.floor(Math.random() * (maxRate - minRate + 1) + minRate);
+
+        this.enemyInterval = setInterval(() => {
+
+            this.enemyList.push(new Enemy(this.stage.map.level))
+            this.currentEnemy = this.enemyList[this.enemyList.length-1]
+            this.enemyAttack(this.currentEnemy)
+
+            if (this.stage.map.cleared == true) {
+                clearInterval(this.enemyInterval)
+            } else {
+                clearInterval(this.enemyInterval)
+                this.enemyAppear();
+            }
+        }, enemyIntervalTimer)
+    }
+
+    this.enemyAttack = (currentEnemy) => {
+        currentEnemy.attackTimer = setTimeout(function () {
+            this.player.receiveDamage();
+        }.bind(this),this.currentEnemy.timeOut)
+    } 
+
+    this.stageClear = () => {
+        document.getElementById('stage').removeEventListener('click',shot)
+        window.removeEventListener('keydown',reload)
+
+        this.stage.clear();
+        
+        clearInterval(this.enemyInterval);
+        clearInterval(this.checkHealth)
+
+        document.getElementById('indicators').style.visibility = 'hidden'
+
         let parent = document.getElementById('stage')
         let enemies = document.querySelectorAll('.enemy')
         enemies.forEach(enemy => {
             parent.removeChild(enemy)
         });
+
         this.enemyList.forEach(enemy => {
             clearTimeout(enemy.attackTimer)
         })
         this.enemyList = []
-    }
 
-    this.enemyAppear = () => {
-        let enemyIntervalTimer = Math.floor(Math.random() * (this.level.stage.enemyRate[1] - this.level.stage.enemyRate[0] + 1) + this.level.stage.enemyRate[0]);
-        this.enemyInterval = setInterval(() => {
-
-            this.enemyList.push(new Enemy(this.level.currentLevel, this.player))
-            this.enemyList[this.enemyList.length - 1].create()
-            this.enemyAttack()
-
-            if (self.level.stage.cleared == true) {
-                clearInterval(this.enemyInterval)
-            } else {
-                clearInterval(this.enemyInterval)
-                self.enemyAppear();
+        document.getElementById('continue').addEventListener('click',contButton = function () {
+            if (this.stage.map.cleared == true && this.stage.currentLevel < maps.length) {
+                this.stage.newStage()
+                this.start(this.stage.currentLevel)
+                document.getElementById('continue').removeEventListener('click',contButton)
             }
-        }, enemyIntervalTimer)
+        }.bind(this))
     }
-
-    this.enemyAttack = () => {
-        let randCountdown = this.enemyList[this.enemyList.length - 1].timeOut
-        this.enemyList[this.enemyList.length - 1].attackTimer = setTimeout(this.enemyList[this.enemyList.length - 1].attack, randCountdown)
-    }
-
-    this.start = () => {
-        self.level.screen()
-        self.level.stage.bgm.play()
-        self.level.stage.bgm.volume = 0.1
-        document.getElementsByTagName('audio')[0].pause()
-
-        //Initial Lives
-        self.player.updateHP();
-        //Start Stage Timer CountDown
-        self.setCountdown();
-        //Load Weapon
-        self.player.reload()
-        //Create timer to introduce new enemies.
-        self.enemyAppear();
-
-        window.addEventListener('click', e => {
-            if (e.target.getAttribute('id') == 'stage' || e.target.getAttribute('class') == 'enemy') {
-
-                if (e.target.getAttribute('class') == 'enemy') {
-                    if (this.player.magazine > 0) {
-                        let parent = document.getElementById('stage')
-                        parent.removeChild(e.target)
-                        let targetIndex = this.enemyList.indexOf(this.enemyList.find(f =>
-                            f.enemyTag === e.target.getAttribute('id')
-                        ))
-                        clearTimeout(this.enemyList.find(f =>
-                            f.enemyTag === e.target.getAttribute('id')
-                        ).attackTimer)
-                        this.enemyList.splice(targetIndex, 1)
-                    }
-                }
-                this.player.shot(e.target)
-            }
-        })
-
-
-        window.addEventListener('keydown', e => {
-            if (e.key == 'r') {
-                this.player.reload();
-            }
-        })
-
-    }
-
 
     this.gameOver = () => {
+        document.getElementById('stage').removeEventListener('click',shot)
+        window.removeEventListener('keydown',reload)
 
-        clearInterval(this.interval)
+        clearInterval(this.clock)
         clearInterval(this.enemyInterval)
+        clearInterval(this.checkHealth)
 
-        let stageParent = document.getElementById('stage')
+        this.stageParent = document.getElementById('stage')
         this.enemyList.forEach(e => {
             clearTimeout(e.attackTimer)
-            stageParent.removeChild(document.getElementById(e.enemyTag))
+            this.stageParent.removeChild(document.getElementById(e.enemyTag))
         })
         this.enemyList = []
 
-        stageParent.classList.remove(this.level.stage.class)
-        stageParent.classList.add('game-over')
+        this.stageParent.classList.remove(this.stage.map.levelClass)
+        this.stageParent.classList.add('game-over')
 
-        this.level.stage.bgm.pause()
+        this.stage.map.bgm.pause()
+        let gameOverFanfare = new Audio('media/sound/russian-funeral.mp3')
+        gameOverFanfare.play();
+        gameOverFanfare.volume = 0.1
 
         document.getElementById('indicators').style.visibility = 'hidden'
 
-    }
+        let counter = 10000
+        this.continueCountDown = document.createElement('div')
+        this.continueCountDown.classList.add('continue-counter')
+        this.continueCountDown.innerText = `Continue? ${counter / 1000}`
 
+        this.stageParent.appendChild(this.continueCountDown)
+        this.continueText = setInterval(function() {
+            counter -= 1000
+            this.stageParent.removeChild(this.continueCountDown)
+            this.continueCountDown.innerText = `Continue? ${counter / 1000}`
+            this.stageParent.appendChild(this.continueCountDown)
+        }.bind(this),1000)
+
+        document.getElementById('continue').addEventListener('click', continueStage = function() {
+            this.continue()
+            this.stageParent.removeChild(this.continueCountDown)
+            this.stageParent.classList.remove('game-over')
+            clearInterval(this.continueText)
+            clearTimeout(this.noContinue)
+            gameOverFanfare.pause()
+        }.bind(this))
+
+        this.noContinue = setTimeout(() => {
+            window.location.reload()
+        },10000)
+
+        }
+
+    this.continue = () => {
+        document.getElementById('continue').removeEventListener('click', continueStage)
+        bgmPrincipal[0].pause()
+        this.player.health = 3
+        this.player.updateHP();
+        this.player.reload();
+
+        this.stage.timeDown = this.stage.map.mapTime
+        this.stage.screen()
+        this.stage.map.bgm.play()
+        //Start Stage Timer CountDown
+        this.chronometer();
+        //Create timer to introduce new enemies.
+        this.enemyAppear();
+        //Checks player health > 0 or game over
+        this.checkHealth = setInterval(function () {
+            if (this.player.health === 0) {
+                console.log('game over')
+                this.gameOver()
+            }
+            console.log(this.checkHealth)
+        }.bind(this), 100)
+
+        //listens to shot (click the mouse on the gaming screen)
+        document.getElementById('stage').addEventListener('click', shot = function (e) {
+            let parent = document.getElementById('stage')
+            if (e.target.getAttribute('class') == 'enemy' && this.player.magazine > 0) {
+                parent.removeChild(e.target)
+                let targetIndex = this.enemyList.indexOf(this.enemyList.find(f =>
+                    f.enemyTag === e.target.getAttribute('id')
+                ))
+                clearTimeout(this.enemyList.find(f =>
+                    f.enemyTag === e.target.getAttribute('id')
+                ).attackTimer)
+                this.enemyList.splice(targetIndex, 1)
+            }
+            this.player.shot(e.target)
+        }.bind(this))
+
+        //listens to reload (r button on keyboard)
+        window.addEventListener('keydown', reload = function (e) {
+            if (e.key == 'r') {
+                this.player.reload();
+            }
+        }.bind(this))  
+    }
 }
 
 //Starts the game
+var gameIsOn = false;
 window.addEventListener('click', e => {
     if (e.target.getAttribute('id') === 'start') {
         if (gameIsOn === false) {
@@ -148,3 +225,4 @@ window.addEventListener('click', e => {
         }
     }
 })
+

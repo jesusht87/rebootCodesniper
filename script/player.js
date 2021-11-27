@@ -76,5 +76,15 @@ function Player() {
         }
     }
 
+    this.receiveDamage = () => {
+        if (this.health > 0) {
+            this.health--
+            let hearts = document.getElementById('lives')
+            let heartRemoved = document.getElementsByClassName('heart-full')
+            hearts.removeChild(heartRemoved[0])
+        }
+    }
 
+    this.updateHP();
+    this.reload();
 }

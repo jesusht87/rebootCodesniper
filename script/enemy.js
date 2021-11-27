@@ -8,17 +8,16 @@ const genDirection = function () {
     return {x: x, y: y, speed: s}
 }
 
-function Enemy(level, player) {
+function Enemy(level) {
     this.coordinates = generateCoordinates(level) // [x, y]
     
     // [minTop, maxTop, minLeft, maxLeft]
-    this.mapLimits = stages.filter(map => map.level == level)[0].mapLimits
+    this.mapLimits = maps[level-1].mapLimits
 
     //enemy properties
     this.dimensions = [35, 60] //  0 = width 1 = height
     this.timeOut = Math.floor(Math.random() * (3000 - 2000 + 1) + 2000)
     this.attackTimer
-    this.player = player
     this.enemyTag = 'enemy' + enemyCount
     
     //enemy functions
@@ -86,14 +85,6 @@ function Enemy(level, player) {
         },this.direction.speed)
     }
 
-    this.attack = () => {
-        if (this.player.health > 0) {
-            this.player.health--
-            let hearts = document.getElementById('lives')
-            let heartRemoved = document.getElementsByClassName('heart-full')
-            hearts.removeChild(heartRemoved[0])
-        }
-    }
-
+    this.create()
     this.move()
 }
