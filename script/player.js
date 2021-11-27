@@ -82,6 +82,18 @@ function Player() {
             let hearts = document.getElementById('lives')
             let heartRemoved = document.getElementsByClassName('heart-full')
             hearts.removeChild(heartRemoved[0])
+
+            let screen = document.getElementById('stage')
+            let damaged = document.createElement('div')
+            damaged.classList.add('stage','damaged')
+            damaged.setAttribute('id','damaged')
+            let wounded = new Audio('media/sound/receive-damage.wav')
+            wounded.play()
+            screen.insertBefore(damaged, screen.firstChild)
+            setTimeout(() =>{
+                screen.removeChild(damaged)
+            },500)
+            
         }
     }
 
