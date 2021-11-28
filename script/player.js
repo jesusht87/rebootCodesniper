@@ -24,12 +24,10 @@ function Player() {
     }
     
     this.shot = () => {
-        
         if (this.magazine > 0) {
             var shotAudio = new Audio('media/sound/shot-sound.mp3')
             shotAudio.play();
             this.updateMagazine('shot');
-            
         } else this.unloaded();
      
     }
@@ -79,9 +77,7 @@ function Player() {
     this.receiveDamage = () => {
         if (this.health > 0) {
             this.health--
-            let hearts = document.getElementById('lives')
-            let heartRemoved = document.getElementsByClassName('heart-full')
-            hearts.removeChild(heartRemoved[0])
+            this.updateHP();
 
             let screen = document.getElementById('stage')
             let damaged = document.createElement('div')
@@ -93,7 +89,6 @@ function Player() {
             setTimeout(() =>{
                 screen.removeChild(damaged)
             },500)
-            
         }
     }
 

@@ -51,5 +51,5 @@ const generateCoordinates = (level) => {
     let x = Math.round(Math.random() * 100) < 50 ? limits[2] : limits[3]
     let y = Math.floor(Math.random() * (limits[1] - limits[0] + 1) + limits[0])
 
-    return [x, y]
+    return {x: x, y: y, limits: limits}
 }

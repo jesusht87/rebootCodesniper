@@ -1,5 +1,6 @@
-let bgmPrincipal = document.getElementsByTagName('audio')
+var bgmPrincipal = document.getElementsByTagName('audio')
 bgmPrincipal[0].volume = 0.1
+
 
 function CodeSniper() {
     this.enemyList = []
@@ -32,22 +33,19 @@ function CodeSniper() {
         //Checks player health > 0 or game over
         this.checkHealth = setInterval(function () {
             if (this.player.health === 0) {
-                console.log('game over')
                 this.gameOver()
             }
-            console.log(this.checkHealth)
         }.bind(this), 100)
 
         //listens to shot (click the mouse on the gaming screen)
         document.getElementById('stage').addEventListener('click', shot = function (e) {
-            
             let thisEnemy = this.enemyList.find(f => f.enemyTag === e.target.getAttribute('id'))
 
             if (e.target.getAttribute('class') == 'enemy' && this.player.magazine > 0) {
                 thisEnemy.die()
-
                 this.enemyList = this.enemyList.filter(enemy => enemy.enemyTag !== e.target.getAttribute('id'))
             }
+
             this.player.shot()
         }.bind(this))
 
@@ -64,7 +62,6 @@ function CodeSniper() {
             this.stage.timeDown -= 1000;
             this.stage.refreshClock()
             if (this.stage.timeDown === 0) {
-                clearInterval(this.clock);
                 this.stageClear()
             }
         }.bind(this), 1000);
@@ -96,45 +93,15 @@ function CodeSniper() {
         }.bind(this),this.currentEnemy.timeOut)
     } 
 
-    this.stageClear = () => {
+    this.stop = () => {
         document.getElementById('stage').removeEventListener('click',shot)
         window.removeEventListener('keydown',reload)
 
-        console.log(this.stage)
-        this.stage.clear();
-        
+        clearInterval(this.clock)        
         clearInterval(this.enemyInterval);
         clearInterval(this.checkHealth)
-
+        
         document.getElementById('indicators').style.visibility = 'hidden'
-
-        let parent = document.getElementById('stage')
-        let enemies = document.querySelectorAll('.enemy')
-        enemies.forEach(enemy => {
-            parent.removeChild(enemy)
-        });
-
-        this.enemyList.forEach(enemy => {
-            clearTimeout(enemy.attackTimer)
-        })
-        this.enemyList = []
-
-        document.getElementById('continue').addEventListener('click',contButton = function () {
-            if (this.stage.map.cleared == true && this.stage.currentLevel < maps.length) {
-                this.stage.newStage()
-                this.start(this.stage.currentLevel)
-                document.getElementById('continue').removeEventListener('click',contButton)
-            }
-        }.bind(this))
-    }
-
-    this.gameOver = () => {
-        document.getElementById('stage').removeEventListener('click',shot)
-        window.removeEventListener('keydown',reload)
-
-        clearInterval(this.clock)
-        clearInterval(this.enemyInterval)
-        clearInterval(this.checkHealth)
 
         this.stageParent = document.getElementById('stage')
         this.enemyList.forEach(e => {
@@ -142,48 +109,40 @@ function CodeSniper() {
             this.stageParent.removeChild(document.getElementById(e.enemyTag))
         })
         this.enemyList = []
-
-        this.stageParent.classList.remove(this.stage.map.levelClass)
-        this.stageParent.classList.add('game-over')
-
-        this.stage.map.bgm.pause()
-        let gameOverFanfare = new Audio('media/sound/russian-funeral.mp3')
-        gameOverFanfare.play();
-        gameOverFanfare.volume = 0.1
-
-        document.getElementById('indicators').style.visibility = 'hidden'
-
-        let counter = 10000
-        this.continueCountDown = document.createElement('div')
-        this.continueCountDown.classList.add('continue-counter')
-        this.continueCountDown.innerText = `Continue? ${counter / 1000}`
-
-        this.stageParent.appendChild(this.continueCountDown)
-        this.continueText = setInterval(function() {
-            counter -= 1000
-            this.stageParent.removeChild(this.continueCountDown)
-            this.continueCountDown.innerText = `Continue? ${counter / 1000}`
-            this.stageParent.appendChild(this.continueCountDown)
-        }.bind(this),1000)
-
-        document.getElementById('continue').addEventListener('click', continueStage = function() {
-            this.continue()
-            this.stageParent.removeChild(this.continueCountDown)
-            this.stageParent.classList.remove('game-over')
-            clearInterval(this.continueText)
-            clearTimeout(this.noContinue)
-            gameOverFanfare.pause()
+        
+        document.getElementById('continue').addEventListener('click',contButton = function () {
+            if (this.stage.map.cleared == true && this.stage.currentLevel < maps.length) {
+                this.stage.newStage()
+                this.start(this.stage.currentLevel)
+                document.getElementById('continue').removeEventListener('click',contButton)
+            } 
+            
+            if (this.player.health <= 0) {
+                this.continue()
+                this.stageParent.removeChild(this.stage.continueCountDown)
+                this.stageParent.classList.remove('game-over')
+                clearInterval(this.stage.continueText)
+                clearTimeout(this.stage.noContinue)
+                this.stage.gameOverFanfare.pause()
+            }
         }.bind(this))
+    }
 
-        this.noContinue = setTimeout(() => {
-            window.location.reload()
-        },10000)
+    this.stageClear = () => {
+        this.stop()
+        this.stage.clear(); 
+    }
 
-        }
+    this.gameOver = () => {
+        this.stop()
+        this.stage.gameOver();
+        this.stage.continue();
+    }
 
     this.continue = () => {
-        document.getElementById('continue').removeEventListener('click', continueStage)
+        document.getElementById('continue').removeEventListener('click', contButton)
         bgmPrincipal[0].pause()
+
         this.player.health = 3
         this.player.updateHP();
         this.player.reload();

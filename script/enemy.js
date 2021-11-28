@@ -10,16 +10,10 @@ const genDirection = function () {
 
 function Enemy(level) {
     this.coordinates = generateCoordinates(level) // [x, y]
-    
-    // [minTop, maxTop, minLeft, maxLeft]
-    this.mapLimits = maps[level-1].mapLimits
-
-    //enemy properties
     this.dimensions = [50, 70] //  0 = width 1 = height
     this.timeOut = Math.floor(Math.random() * (3000 - 2000 + 1) + 2000)
-    this.attackTimer
-    this.enemyTag = 'enemy' + enemyCount
-    
+    this.enemyTag = `enemy${enemyCount}`
+    this.attackTimer;
     //enemy functions
     this.create = () => {
         const stage = document.getElementById('stage')
@@ -29,11 +23,11 @@ function Enemy(level) {
         this.html.classList.add('enemy')
 
         //An enemy is always unique, and only may appear 1 time on screen, so it always picks the latest enemy object in the array.
-        this.html.id = `enemy${enemyCount}`
+        this.html.id = this.enemyTag 
         this.html.style.width = this.dimensions[0]+'px'
         this.html.style.height = this.dimensions[1]+'px'
-        this.html.style.left = `${this.coordinates[0]}px`
-        this.html.style.top = `${this.coordinates[1]}px`
+        this.html.style.left = `${this.coordinates.x}px`
+        this.html.style.top = `${this.coordinates.y}px`
         stage.appendChild(this.html)
         enemyCount++
     }
@@ -42,21 +36,23 @@ function Enemy(level) {
         this.direction = genDirection();
 
         this.movement = setInterval(() => {
+            
             let currentX = parseInt(this.html.style.left.replace(/px/g,''))
             let currentY = parseInt(this.html.style.top.replace(/px/g,''))
+
             switch (this.direction.x) {
                 case 'right':
-                    if(parseInt(this.html.style.left.replace(/px/g,'')) <= this.mapLimits[3]) {
+                    if(currentX <= this.coordinates.limits[3]) {
                         currentX++
-                        this.html.style.left = currentX + 'px';
+                        this.html.style.left = `${currentX}px`;
                     } else {
                         this.direction.x = 'left'
                     }
                     break;
                 case 'left':
-                    if(parseInt(this.html.style.left.replace(/px/g,'')) >= this.mapLimits[2]) {
+                    if(currentX >= this.coordinates.limits[2]) {
                         currentX--
-                        this.html.style.left = currentX + 'px';
+                        this.html.style.left = `${currentX}px`;
                     } else {
                         this.direction.x = 'right'
                     }
@@ -64,18 +60,18 @@ function Enemy(level) {
             }
             switch (this.direction.y) {
                 case 'up':
-                    if(parseInt(this.html.style.top.replace(/px/g,'')) <= this.mapLimits[1]) { //bottom
+                    if(currentY <= this.coordinates.limits[1]) { //bottom
                         currentY++
-                        this.html.style.top = currentY + 'px';
+                        this.html.style.top = `${currentY}px`;
                     
                     } else {
                         this.direction.y = 'down'
                     }
                     break;
                 case 'down':
-                    if(parseInt(this.html.style.top.replace(/px/g,'')) >= this.mapLimits[0]) { //top
+                    if(currentY >= this.coordinates.limits[0]) { //top
                         currentY--
-                        this.html.style.top = currentY + 'px';
+                        this.html.style.top = `${currentY}px`;
                     
                     } else {
                         this.direction.y = 'up'
@@ -89,10 +85,9 @@ function Enemy(level) {
         this.animationSpeed = 100;
         this.frames = 12;
         this.thisFrame = 1;
+
             this.animationInterval = setInterval(function () {
-
                 this.html.style.backgroundImage = "url('../media/images/characters/" + this.direction.x + "-enemy-run-" + this.thisFrame + ".png')"
-
                 if (this.thisFrame < this.frames) {
                     this.thisFrame++
                 } else {
