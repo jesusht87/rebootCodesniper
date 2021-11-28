@@ -157,10 +157,8 @@ function CodeSniper() {
         //Checks player health > 0 or game over
         this.checkHealth = setInterval(function () {
             if (this.player.health === 0) {
-                console.log('game over')
                 this.gameOver()
             }
-            console.log(this.checkHealth)
         }.bind(this), 100)
 
         //listens to shot (click the mouse on the gaming screen)
