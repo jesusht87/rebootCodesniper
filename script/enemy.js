@@ -87,7 +87,7 @@ function Enemy(level) {
         this.thisFrame = 1;
 
             this.animationInterval = setInterval(function () {
-                this.html.style.backgroundImage = "url('../media/images/characters/" + this.direction.x + "-enemy-run-" + this.thisFrame + ".png')"
+                this.html.style.backgroundImage = "url('media/images/characters/" + this.direction.x + "-enemy-run-" + this.thisFrame + ".png')"
                 if (this.thisFrame < this.frames) {
                     this.thisFrame++
                 } else {
