@@ -15,7 +15,7 @@ function Enemy(level) {
     this.mapLimits = maps[level-1].mapLimits
 
     //enemy properties
-    this.dimensions = [35, 60] //  0 = width 1 = height
+    this.dimensions = [50, 70] //  0 = width 1 = height
     this.timeOut = Math.floor(Math.random() * (3000 - 2000 + 1) + 2000)
     this.attackTimer
     this.enemyTag = 'enemy' + enemyCount
@@ -85,6 +85,30 @@ function Enemy(level) {
         },this.direction.speed)
     }
 
+    this.animation = () => {
+        this.animationSpeed = 100;
+        this.frames = 12;
+        this.thisFrame = 1;
+            this.animationInterval = setInterval(function () {
+
+                this.html.style.backgroundImage = "url('../media/images/characters/" + this.direction.x + "-enemy-run-" + this.thisFrame + ".png')"
+
+                if (this.thisFrame < this.frames) {
+                    this.thisFrame++
+                } else {
+                    this.thisFrame = 1
+                }
+            }.bind(this), this.animationSpeed)
+    }
+
+    this.die = () => {
+        stage.removeChild(this.html)
+        clearTimeout(this.attackTimer)
+        clearInterval(this.animationInterval)
+        clearInterval(this.movement)
+    }
+
     this.create()
     this.move()
+    this.animation()
 }

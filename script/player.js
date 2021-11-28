@@ -23,7 +23,7 @@ function Player() {
             }
     }
     
-    this.shot = (target) => {
+    this.shot = () => {
         
         if (this.magazine > 0) {
             var shotAudio = new Audio('media/sound/shot-sound.mp3')

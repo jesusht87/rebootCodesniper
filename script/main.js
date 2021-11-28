@@ -6,6 +6,7 @@ function CodeSniper() {
 
     this.start = (level=1) => {
         bgmPrincipal[0].pause()
+
         this.stage
         if(!this.stage) {
             this.stage = new Stage(level)
@@ -13,7 +14,9 @@ function CodeSniper() {
             this.stage.timeDown = this.stage.map.mapTime
             this.stage.screen()
             this.stage.map.bgm.play()
+            this.stage.map.bgm.volume = 0.1
         }
+
         this.player
         if (!this.player) {
             this.player = new Player()
@@ -21,6 +24,7 @@ function CodeSniper() {
             this.player.reload()
             this.player.updateHP()
         }
+
         //Start Stage Timer CountDown
         this.chronometer();
         //Create timer to introduce new enemies.
@@ -36,18 +40,15 @@ function CodeSniper() {
 
         //listens to shot (click the mouse on the gaming screen)
         document.getElementById('stage').addEventListener('click', shot = function (e) {
-            let parent = document.getElementById('stage')
+            
+            let thisEnemy = this.enemyList.find(f => f.enemyTag === e.target.getAttribute('id'))
+
             if (e.target.getAttribute('class') == 'enemy' && this.player.magazine > 0) {
-                parent.removeChild(e.target)
-                let targetIndex = this.enemyList.indexOf(this.enemyList.find(f =>
-                    f.enemyTag === e.target.getAttribute('id')
-                ))
-                clearTimeout(this.enemyList.find(f =>
-                    f.enemyTag === e.target.getAttribute('id')
-                ).attackTimer)
-                this.enemyList.splice(targetIndex, 1)
+                thisEnemy.die()
+
+                this.enemyList = this.enemyList.filter(enemy => enemy.enemyTag !== e.target.getAttribute('id'))
             }
-            this.player.shot(e.target)
+            this.player.shot()
         }.bind(this))
 
         //listens to reload (r button on keyboard)
