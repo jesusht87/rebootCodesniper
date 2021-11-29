@@ -114,7 +114,7 @@ function CodeSniper() {
                 this.stage.newStage()
                 this.start(this.stage.currentLevel)
                 document.getElementById('continue').removeEventListener('click',contButton)
-            } 
+            }
             
             if (this.player.health <= 0) {
                 this.continue()

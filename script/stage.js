@@ -27,7 +27,15 @@ function Stage(level = 1) {
     this.clear = () => {
         this.map.bgm.pause()
         this.stage.classList.remove(this.map.levelClass)
-        this.stage.classList.add('next-stage')
+        if (this.map.level === maps.length) {
+            this.stage.classList.add('end-game-screen')
+            this.endMusic = new Audio('media/sound/MGSMT.mp3')
+            this.endMusic.play()
+            this.endMusic.volume = 0.1
+        } else {
+            this.stage.classList.add('next-stage')
+        }
+        
         this.map.cleared = true;  
     }
     // Prepares and clears everything, so we can build after the new stage.
