@@ -71,9 +71,11 @@ a.button:active{
 }
 
 .game-title {
+    margin-top: 50px;
     position: relative;
     text-align: center;
-    margin: 13%;
+    font-size: 35px;
+    margin: 10%;
     text-shadow: green 10px 5px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
