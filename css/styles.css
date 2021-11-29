@@ -59,7 +59,7 @@ a.button:active{
     position: relative;
     height: 100px;
     width: 250px;
-    margin: 0 auto;
+    margin: 165px auto;
     bottom: 5%;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -71,24 +71,44 @@ a.button:active{
 }
 
 .game-title {
-    margin-top: 50px;
     position: relative;
+    top: 35px;
+    line-height: 110px;
     text-align: center;
     font-size: 35px;
-    margin: 10%;
+    padding-top: 15px;
+    margin: auto 20px;
     text-shadow: green 10px 5px;
+    border-radius: 5px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
        -moz-user-select: none; /* Old versions of Firefox */
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
+                                         supported by Chrome, Edge, Opera and Firefox */  
+    animation: arcade-colors 6s linear infinite alternate both;
+}
+
+@keyframes arcade-colors {
+    0% {
+        background: #4615f552;
+    }
+    33.3333% {
+        background: #54aa0d69;
+    }
+    66.666% {
+        background: #ce1e1162;
+    }
+    100% {
+        background: #03a3b86c;
+    }
 }
 
 .game-screen {
     position: relative;
-    margin: 25% auto;
+    top: 10px;
+    margin: 15% auto;
     width: 510px;
     min-width: 510px;
     height: 380px;

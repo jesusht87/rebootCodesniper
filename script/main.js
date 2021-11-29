@@ -1,7 +1,6 @@
 var bgmPrincipal = document.getElementsByTagName('audio')
 bgmPrincipal[0].volume = 0.1
 
-
 function CodeSniper() {
     this.enemyList = []
 
