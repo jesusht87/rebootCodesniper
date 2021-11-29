@@ -42,6 +42,7 @@ function Enemy(level) {
 
             switch (this.direction.x) {
                 case 'right':
+                    this.html.style.backgroundImage = "url('media/images/characters/right-enemy-run.gif')"
                     if(currentX <= this.coordinates.limits[3]) {
                         currentX++
                         this.html.style.left = `${currentX}px`;
@@ -50,6 +51,7 @@ function Enemy(level) {
                     }
                     break;
                 case 'left':
+                    this.html.style.backgroundImage = "url('media/images/characters/left-enemy-run.gif')"
                     if(currentX >= this.coordinates.limits[2]) {
                         currentX--
                         this.html.style.left = `${currentX}px`;
@@ -81,20 +83,20 @@ function Enemy(level) {
         },this.direction.speed)
     }
 
-    this.animation = () => {
-        this.animationSpeed = 100;
-        this.frames = 12;
-        this.thisFrame = 1;
+    // this.animation = () => {
+    //     this.animationSpeed = 100;
+    //     this.frames = 12;
+    //     this.thisFrame = 1;
 
-            this.animationInterval = setInterval(function () {
-                this.html.style.backgroundImage = "url('media/images/characters/" + this.direction.x + "-enemy-run-" + this.thisFrame + ".png')"
-                if (this.thisFrame < this.frames) {
-                    this.thisFrame++
-                } else {
-                    this.thisFrame = 1
-                }
-            }.bind(this), this.animationSpeed)
-    }
+    //         this.animationInterval = setInterval(function () {
+    //             this.html.style.backgroundImage = "url('media/images/characters/" + this.direction.x + "-enemy-run-" + this.thisFrame + ".png')"
+    //             if (this.thisFrame < this.frames) {
+    //                 this.thisFrame++
+    //             } else {
+    //                 this.thisFrame = 1
+    //             }
+    //         }.bind(this), this.animationSpeed)
+    // }
 
     this.die = () => {
         stage.removeChild(this.html)
@@ -105,5 +107,5 @@ function Enemy(level) {
 
     this.create()
     this.move()
-    this.animation()
+    //   this.animation()
 }
