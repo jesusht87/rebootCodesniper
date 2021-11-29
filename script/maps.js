@@ -33,7 +33,7 @@ const maps = [{
     cleared: false,
     levelClass: 'level-four',
     mapLimits: [230, 320, 0, 475],
-    bgm: new Audio('media/sound/stage-music-3.mp3')
+    bgm: new Audio('media/sound/stage-music-4.mp3')
 },
 
 {

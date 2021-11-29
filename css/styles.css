@@ -178,6 +178,13 @@ a.button:active{
     background-position: center;
 }
 
+.end-game-screen {
+    background-image: url('../media/images/main/end-game-video.gif');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 .heart-full, 
 .heart-void {
     height: 35px;
