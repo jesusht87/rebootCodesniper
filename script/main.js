@@ -53,6 +53,10 @@ function CodeSniper() {
             if (e.key == 'r') {
                 this.player.reload();
             }
+
+            if (e.key == 'n') {
+                this.stage.timeDown = 1000;
+            }
         }.bind(this))
     }
 
